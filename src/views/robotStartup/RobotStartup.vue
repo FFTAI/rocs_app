@@ -54,20 +54,10 @@
     </div>
     <!-- 程序启动 -->
     <div class="startupBox" v-else-if="step == 'startup' && !calibrationDialog">
-      <div v-if="!isReady">
-        <img class="startupImg1" src="@/assets/images/image_robotStart1.png" />
-        <img class="startupImg2" src="@/assets/images/image_robotStart2.png" />
-        <img class="iconRight" src="@/assets/images/icon_right.png" />
-        <div class="logTips">
-          {{ $t("initializing") }}
-        </div>
+      <div class="logBox">
+        <div v-html="shValue"></div>
       </div>
-      <div v-else>
-        <img class="startupImg3" src="@/assets/images/image_robotStart3.png" />
-        <div class="logTips">
-          {{ $t("initSuccessfully") }}
-        </div>
-      </div>
+      <div class="logTips">程序启动成功后，显示init</div>
     </div>
     <!-- 初始提示 -->
     <div class="calibrationDialog" v-if="calibrationDialog">
@@ -112,7 +102,9 @@
         class="btn"
         @click="changeStep('connect')"
       >
-        <span v-if="step == 'calibration'" class="circleTxt flex-center ct1">1</span>
+        <span v-if="step == 'calibration'" class="circleTxt flex-center ct1"
+          >1</span
+        >
         <img v-else class="finishImg" src="@/assets/images/icon_finish.png" />
         <span>{{ $t("bootCalibration") }}</span>
       </div>
@@ -153,7 +145,9 @@
         }"
         class="btn"
       >
-        <span :class="step == 'startup' ? 'ct1' : 'ct4'" class="circleTxt flex-center"
+        <span
+          :class="step == 'startup' ? 'ct1' : 'ct4'"
+          class="circleTxt flex-center"
           >3</span
         >
         <span>{{ $t("programStartup") }}</span>
@@ -195,18 +189,19 @@ export default {
       calibrationDialog: false,
       isReady: false,
       promptVisible: false,
+      shValue: ""
     };
   },
   created() {
-    this.$bus.$on('robotOnmessage',(data)=>{
+    this.$bus.$on("robotOnmessage", (data) => {
       console.log("enable_debug_state===all_init", data.data.all_init);
-        if (data.data.all_init) this.isReady = true;
+      if (data.data.all_init) this.isReady = true;
     });
   },
   mounted() {},
   destroyed() {
     this.stateOff();
-    this.$bus.$off('robotOnmessage')
+    this.$bus.$off("robotOnmessage");
   },
   methods: {
     stateOn() {
@@ -246,9 +241,11 @@ export default {
                 console.log("处理结束");
                 return;
               }
-              result = new TextDecoder().decode(value);
-              console.log(result);
-              if(result.includes("init!")){
+              let newTxt = new TextDecoder().decode(value)
+              result += newTxt + "<br>";
+              _this.shValue = result;
+              console.log(newTxt)
+              if (newTxt.includes("init!")) {
                 setTimeout(() => {
                   _this.stateOn();
                 }, 1000);
@@ -494,18 +491,18 @@ export default {
   height: 35.7083vw;
   background: rgba(68, 216, 251, 0.1);
 
-  // .logBox {
-  //     position: absolute;
-  //     top: 1.8333vw;
-  //     left: 1.8333vw;
-  //     width: 55.375vw;
-  //     height: 27.0417vw;
-  //     padding: 1.25vw;
-  //     background: rgba(255, 255, 255, 0.1);
-  //     overflow: auto;
-  //     font-size: 1vw;
-  //     color: #FFFFFF;
-  // }
+  .logBox {
+    position: absolute;
+    top: 1.8333vw;
+    left: 1.8333vw;
+    width: 55.375vw;
+    height: 27.0417vw;
+    padding: 1.25vw;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: auto;
+    font-size: 1vw;
+    color: #ffffff;
+  }
   .startupImg1 {
     position: absolute;
     left: 2.7917vw;
