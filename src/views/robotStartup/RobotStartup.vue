@@ -193,23 +193,23 @@ export default {
     };
   },
   created() {
-    this.$bus.$on("robotOnmessage", (data) => {
-      console.log("enable_debug_state===all_init", data.data.all_init);
-      if (data.data.all_init) this.isReady = true;
-    });
+    // this.$bus.$on("robotOnmessage", (data) => {
+    //   console.log("enable_debug_state===all_init", data.data.all_init);
+    //   if (data.data.all_init) this.isReady = true;
+    // });
   },
   mounted() {},
   destroyed() {
-    this.stateOff();
-    this.$bus.$off("robotOnmessage");
+    // this.stateOff();
+    // this.$bus.$off("robotOnmessage");
   },
   methods: {
-    stateOn() {
-      this.robotWs.robot.enable_debug_state(2);
-    },
-    stateOff() {
-      this.robotWs.robot.disable_debug_state();
-    },
+    // stateOn() {
+    //   this.robotWs.robot.enable_debug_state(2);
+    // },
+    // stateOff() {
+    //   this.robotWs.robot.disable_debug_state();
+    // },
     closeDialog() {
       this.calibrationDialog = false;
     },
@@ -246,9 +246,7 @@ export default {
               _this.shValue = result;
               console.log(newTxt)
               if (newTxt.includes("init!")) {
-                setTimeout(() => {
-                  _this.stateOn();
-                }, 1000);
+                _this.isReady = true;
               }
               process();
             });

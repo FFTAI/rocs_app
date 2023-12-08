@@ -23,7 +23,9 @@
       </div>
       <div v-if="prompt != 'reconnect'" class="btnBox flex-between">
         <div class="btn blue" @click="cancel()">{{ $t("cancel") }}</div>
-        <div class="btn white01-bkg" @click="confirm()">{{ $t("confirm") }}</div>
+        <div class="btn white01-bkg" @click="confirm()">
+          {{ $t("confirm") }}
+        </div>
       </div>
       <div v-else class="btnBox flex-between" style="left: 11.7083vw">
         <div class="btn blue" @click="reconnect()">{{ $t("reconnect") }}</div>
@@ -66,14 +68,16 @@ export default {
       this.$emit("confirm");
     },
     reconnect() {
-      this.$emit("reconnect");
+      let main = plus.android.runtimeMainActivity();
+      let Intent = plus.android.importClass("android.content.Intent");
+      let mIntent = new Intent("android.settings.WIFI_SETTINGS");
+      main.startActivity(mIntent);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .prompt {
   z-index: 999;
   width: 35.7083vw;

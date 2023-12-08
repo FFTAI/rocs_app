@@ -215,7 +215,6 @@
     <prompt-box
       :prompt="'reconnect'"
       v-if="!connected"
-      @reconnect="reconnect"
     ></prompt-box>
   </div>
 </template>
@@ -278,8 +277,7 @@ export default {
     },
     selfCheckExpand() {
       this.selfCheckActivated = !this.selfCheckActivated;
-    },
-    reconnect() {},
+    }
   },
 };
 </script>
