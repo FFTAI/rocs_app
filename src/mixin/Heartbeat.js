@@ -20,7 +20,7 @@ export default {
       this.intervalId = setInterval(() => {
         // 执行心跳检测的逻辑
         this.heartbeatCheck();
-      }, 2000);
+      }, 5000);
     },
     stopHeartbeat() {
       // 停止心跳检测

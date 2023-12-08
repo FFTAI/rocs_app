@@ -59,7 +59,7 @@
           :class="{ activatedModel: activated == 'dynamic' }"
           @click="changeModel('dynamic')"
         >
-          <span class="btnTxt common-font">{{ $t("dynamicShowcase") }}</span>
+          <span class="btnTxt common-font">{{ $t("dynamic") }}</span>
         </div>
         <div
           class="modelBtn flex-center"

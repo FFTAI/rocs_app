@@ -503,7 +503,7 @@ export default {
               );
             } else if (_this.isStand && !_this.isWalking) {
               let pitch = data.vector.y * 17.1887;
-              let rotate_waist = data.vector.x * 14.32;
+              let rotate_waist = data.vector.x * -14.32;
               if (Math.abs(pitch) < 1.71887) pitch = 0;
               if (Math.abs(rotate_waist) < 1.432) rotate_waist = 0;
               console.log(pitch, rotate_waist);
@@ -546,7 +546,6 @@ export default {
               let yaw = data.vector.x * 60;
               if (squat > -0.015) squat = 0;
               if (Math.abs(yaw) < 6) yaw = 0;
-              console.log(squat, yaw);
               _this.operateHead(0, yaw);
               _this.operateBody(squat, 0);
             } else if (!_this.isStand && _this.isWalking) {
@@ -575,6 +574,7 @@ export default {
       this.promptBoxOpen("calibration");
     },
     doCalibration() {
+      this.isStand = false
       this.robotWs.robot.start();
       this.mode = "initial";
       setTimeout(() => {
@@ -605,7 +605,7 @@ export default {
     },
     //操控头部
     operateHead(pitch, yaw) {
-      console.log(pitch, yaw);
+      console.log("头部。。。。。", pitch, yaw);
       try {
         this.robotWs.robot.head(0, pitch, yaw);
       } catch (error) {
@@ -614,7 +614,7 @@ export default {
     },
     //操控身体
     operateBody(squat, rotate_waist) {
-      console.log(squat, rotate_waist);
+      console.log("身体。。。。。", squat, rotate_waist);
       try {
         this.robotWs.robot.body(squat, rotate_waist);
       } catch (error) {

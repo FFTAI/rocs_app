@@ -136,11 +136,11 @@
     <div class="listBox" v-if="isActivated == 'status'">
       <div class="item flex-between common-font">
         <span>{{ $t("productModel") }}</span>
-        <span>GR-1R</span>
+        <span>GR-1</span>
       </div>
       <div class="item flex-between common-font">
         <span>{{ $t("serialNumber") }}</span>
-        <span>GR1R23OT0001</span>
+        <span>GR123OT0001</span>
       </div>
       <div class="item flex-between common-font">
         <span>{{ $t("robotVersion") }}</span>
@@ -148,7 +148,7 @@
       </div>
       <div class="item flex-between common-font">
         <span>{{ $t("appVersion") }}</span>
-        <span>V1.1.41</span>
+        <span>V1.1.42</span>
       </div>
       <div
         class="item flex-between common-font"

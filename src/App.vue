@@ -9,6 +9,11 @@ import { Human } from "rocs-client";
 import Bus from "@/utils/bus.js";
 export default {
   name: "app",
+  data() {
+    return {
+      reWs: false,
+    };
+  },
   created() {
     this.initRobotWs();
   },
@@ -30,6 +35,7 @@ export default {
     window.removeEventListener("gamepaddisconnected", this.gamepaddiscted);
   },
   methods: {
+    //初始化Robot实例
     initRobotWs() {
       var robot = new Human({
         host: process.env.VUE_APP_URL.split("//")[1].split(":")[0],
@@ -37,21 +43,26 @@ export default {
       this.robotWs.setWs(robot);
       robot.on_connected(() => {
         Bus.$emit("robotOnconnected");
+        this.reWs = false;
       });
       robot.on_message((data) => {
         var currData = JSON.parse(data.data);
         Bus.$emit("robotOnmessage", currData);
       });
       robot.on_close(() => {
-        setTimeout(() => {
-          this.initRobotWs();
-        }, 2000);
+        this.reconnectWs();
       });
       robot.on_error(() => {
+        this.reconnectWs();
+      });
+    },
+    reconnectWs() {
+      if (!this.reWs) {
         setTimeout(() => {
           this.initRobotWs();
+          this.reWs = true;
         }, 2000);
-      });
+      }
     },
     gamepadcted() {
       this.$store.commit("setGamepadConnected", true);
